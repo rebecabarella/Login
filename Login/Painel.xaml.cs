@@ -6,10 +6,12 @@ namespace Login;
 
 public partial class Painel : Window
 {
+    private int tempoMaximo = 30;
     public string nomeUsuario;
     public Painel()
     {
         InitializeComponent();
+        GerenciarContagemRegressiva();
     }
 
     private void BotaoBuscarImagem(object sender, RoutedEventArgs e)
@@ -70,5 +72,22 @@ public partial class Painel : Window
             new Uri(url);
         imageBitmap.EndInit();
         return imageBitmap;
+    }
+    private async void GerenciarContagemRegressiva()
+    {
+        int contador = 0;
+        while (contador < tempoMaximo)
+        {   
+        await Task.Delay(1000);
+        contador++;
+       displayTemporizador.Text = $"contagem Regressiva: {tempoMaximo - contador}s";
+        }
+        
+        this.Close();
+    }
+
+    private void QuandoJanelaAbrir(object sender, RoutedEventArgs e)
+    {
+       GerenciarContagemRegressiva();
     }
 }
